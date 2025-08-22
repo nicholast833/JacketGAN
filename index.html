@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAN Model Evolution Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS for timeline animation */
+        .timeline-container {
+            scrollbar-width: thin;
+            scrollbar-color: #f97316 #374151;
+            padding-bottom: 20px; /* Space for scrollbar */
+        }
+        .timeline-container::-webkit-scrollbar {
+            height: 8px;
+            width: 60%;
+            margin: 0 auto;
+        }
+        .timeline-container::-webkit-scrollbar-track {
+            background: #374151;
+            border-radius: 4px;
+        }
+        .timeline-container::-webkit-scrollbar-thumb {
+            background-color: #f97316;
+            border-radius: 4px;
+        }
+        .timeline-container:hover {
+            scrollbar-color: #f97316 #4b5563;
+        }
+        .timeline-container:hover::-webkit-scrollbar-track {
+            background: #4b5563;
+        }
+        
+        .timeline-item {
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .caption-block {
+            opacity: 1;
+            max-height: 100px;
+            padding-top: 1rem;
+        }
+        
+        /* Custom orange gradient */
+        .orange-gradient {
+            background: linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.05) 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 min-h-screen font-sans">
+    <nav class="bg-gray-800 border-b border-gray-700 py-4 px-6 sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-orange-500 rounded-full"></div>
+                <span class="text-xl font-bold">Jacket<span class="text-orange-500">GAN</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#overview" class="hover:text-orange-500 transition">Overview</a>
+                <a href="#timeline" class="hover:text-orange-500 transition">Timeline</a>
+                <a href="#results" class="hover:text-orange-500 transition">Results</a>
+                <a href="#about" class="hover:text-orange-500 transition">About</a>
+            </div>
+            <button class="md:hidden text-gray-300">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="py-20 px-6 orange-gradient">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Jacket<span class="text-orange-500">GAN</span></h1>
+            <div class="flex justify-center space-x-4">
+                <a href="#timeline" class="bg-orange-500 hover:bg-orange-600 text-gray-900 font-semibold px-6 py-3 rounded-lg transition">View Timeline</a>
+                <button id="readCaseStudy" class="border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-gray-900 font-semibold px-6 py-3 rounded-lg transition">Read Case Study</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <section id="timeline" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Development Timeline</h2>
+            <p class="text-gray-400 mb-12 max-w-3xl">Scroll horizontally to explore the evolution of our GAN model through key iterations. Hover on any image to view detailed technical notes about that version.</p>
+            
+            <div class="timeline-container overflow-x-auto pb-8 pt-2 px-2">
+                <div class="flex space-x-8 w-max px-4">
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_A_PG_Pad_Aug_d50_200eccf96f5b0b74c427.md.png" alt="Model 1 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PG-Pad-Aug d50-200e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 1</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">This model uses a Progressive Growing (PG) architecture with padding and data augmentation, trained for 200 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_A_PGv4_RefPad_d50_300ed3a7162bc553f5a8.png" alt="Model 2 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PGv4-RefPad d50-300e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 2</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">The 4th version of the PG model, using reflection padding. It was trained for 300 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_B_PGv5_RefPad_d50_300e.md.png" alt="Model 3 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PGv5-RefPad d50-300e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 3</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">The 5th version of the PG model, also using reflection padding and trained for 300 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_B_PG_Aug_d50_200e0a8c4d8b2bff6a8a.md.png" alt="Model 4 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PG-Aug d50-200e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 4</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">This iteration returns to the original PG architecture with augmentation, trained for 200 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_C_Std_d25_150ea794f907b8ed3c99.md.png" alt="Model 5 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">Std d25-150e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 5</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">A standard (non-progressive) architecture with a dataset split of 25%, trained for 150 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_C_Std_VLR_L_d48_250ece4209dd348588ee.md.png" alt="Model 6 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">Std-VLR-L d48-250e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 6</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">This standard model uses a very low learning rate (VLR) and a larger dataset split (48%), trained for 250 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Project Overview</h2>
+            <div class="space-y-6 text-gray-300 leading-relaxed">
+                <p>
+                    This case study chronicles a multi-month project focused on building and refining a Generative Adversarial Network (GAN) to create high-resolution j-card "jacket" designs. What began as frustration with overpriced, manually reformatted game art evolved into a structured research project exploring the intersection of AI and independent digital media production.
+                </p>
+                <p>
+                    The project addresses a specific problem: the translation of three-part Nintendo 3DS game case covers into j-card layouts. These covers were sourced from databases like GameTDB and The Cover Project, with the goal of automating a process that typically takes 30-45 minutes per cover when done manually.
+                </p>
+                <p>
+                    The core solution involves a Pix2Pix conditional GAN pipeline specialized for image-to-image translation tasks. The approach leverages transfer learning to accelerate training and improve output fidelity, breaking the complex transformation into manageable sub-models that handle different components of the j-card design.
+                </p>
+                <p>
+                    Key challenges included data acquisition through structured parsing of game codes, developing an interactive segmentation tool using OpenCV for consistent input formatting, and navigating the iterative process of model training and refinement. The project emphasizes the importance of proper data preparation over complex architectural changes, as evidenced by lessons learned from early image compression decisions.
+                </p>
+                <div class="mt-8 p-6 bg-gray-800 rounded-lg border-l-4 border-orange-500">
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">Methodology Highlights</h3>
+                    <ul class="space-y-3 list-disc list-inside">
+                        <li>Pix2Pix conditional GAN architecture for image translation</li>
+                        <li>Structured data acquisition from GameTDB and 3dsdb sources</li>
+                        <li>Interactive segmentation tool with OpenCV edge detection</li>
+                        <li>Specialized sub-models for different j-card components</li>
+                        <li>Human-in-the-loop feedback cycle for continuous improvement</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="results" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Quantitative Results</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">PSNR Comparison</h3>
+                    <img src="https://cdn.allthepics.net/images/2025/08/22/PSNR_Comparison.png" alt="PSNR Scores Chart" class="rounded">
+                    <p class="mt-4 text-gray-400">
+                        Peak Signal-to-Noise Ratio (PSNR) measures image quality by comparing the maximum possible power of a signal to the power of corrupting noise. Higher PSNR values generally indicate higher quality reconstructions.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">SSIM Comparison</h3>
+                    <img src="https://cdn.allthepics.net/images/2025/08/22/SSIM_Comparison.png" alt="SSIM Scores Chart" class="rounded">
+                    <p class="mt-4 text-gray-400">
+                        The Structural Similarity Index Measure (SSIM) assesses the perceptual difference between two images. It is better aligned with human visual perception than PSNR. A value closer to 1 indicates a higher similarity.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">About the Creator</h2>
+            <div class="bg-gray-800 rounded-lg p-8 max-w-2xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <img src="https://i.postimg.cc/8PSk8Sbn/kirby-Button-1.gif" alt="Profile Picture" class="w-32 h-32 rounded-full object-cover border-2 border-orange-500 flex-shrink-0">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Nicholas Taylor</h3>
+                        <p class="text-gray-400 mb-4">
+                            Hey! Thanks for checking out this project. I'm a Data Visualization student at the University of Washington, and if you like this project I'd love to connect! Check me out on the paltforms below.
+                        </p>
+                        <div class="flex justify-center space-x-6">
+                            <a href="https://www.linkedin.com/in/nicholast833/" class="text-orange-500 hover:text-orange-400 transition" target="_blank">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="https://github.com/nicholast833" class="text-orange-500 hover:text-orange-400 transition" target="_blank">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="https://nicholast833.github.io/Portfolio/" class="text-orange-500 hover:text-orange-400 transition" target="_blank">
+                                <i class="fas fa-paper-plane text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-800 border-t border-gray-700 py-8 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-orange-500 rounded-full"></div>
+                            <span class="text-lg font-bold">Jacket<span class="text-orange-500">GAN</span></span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Generative jacket design models</p>
+                    </div>
+                    <div class="flex justify-center space-x-6 mt-4 md:mt-0">
+                        <a href="https://github.com/nicholast833" class="text-gray-400 hover:text-orange-500 transition" target="_blank"><i class="fab fa-github text-xl"></i></a>
+                        <a href="https://www.linkedin.com/in/nicholast833/" class="text-gray-400 hover:text-orange-500 transition" target="_blank"><i class="fab fa-linkedin text-xl"></i></a>
+                        <a href="https://nicholast833.github.io/Portfolio/" class="text-gray-400 hover:text-orange-500 transition" target="_blank"><i class="fas fa-paper-plane text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <div id="caseStudyOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-50 overflow-y-auto hidden">
+            <div class="max-w-4xl mx-auto py-20 px-6 text-gray-300">
+                <div class="flex justify-between items-center mb-12">
+                    <h2 class="text-3xl font-bold text-white">Case Study: <span class="text-orange-500">JacketGAN</span></h2>
+                    <button id="closeOverlay" class="text-gray-400 hover:text-orange-500 text-3xl transition-colors duration-300">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                </div>
+                <div class="prose prose-invert max-w-none space-y-6 leading-relaxed">
+                    
+                    <div class="p-6 border-l-4 border-orange-500 bg-gray-800 rounded-r-lg">
+                        <h3 class="text-2xl font-bold text-orange-400 mb-2">Background</h3>
+                        <p class="text-lg">This case study chronicles a multi-month project to build and refine a Generative Adversarial Network (GAN) for creating high-resolution j-card “jacket” designs. What started as a frustration with overpriced, manually reformatted game art evolved into a structured research project, blending technical rigor with creative experimentation to explore the intersection of AI and independent digital media production.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">The Problem: <span class="text-orange-500">Digital Labor Meets AI</span></h3>
+                        <p>The project began not as a technical challenge, but as a question: When does AI-driven media production overlap with the work of independent sellers on platforms like Etsy? J-card jackets—the inserts for cassette tapes—perfectly capture this dynamic. Many Etsy sellers take existing cover art, reformat it, and sell it for a significant markup. A simple design task, it turns out, can translate into real income.</p>
+                        <br></br>
+                        <p>The focus was on a specific translation: taking a three-part Nintendo 3DS game case cover and converting it into a j-card layout. The motivation was personal; seeing overpriced Etsy listings for game covers felt absurd. The manual work of creating my own versions was draining, taking 30–45 minutes per cover. Early attempts at automation with a simple Python script yielded crude results. It was clear that a better approach was needed—one that could learn and create, not just resize and paste.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">The Solution: <span class="text-orange-500">A GAN-Powered Pipeline</span></h3>
+                        <p>The core objective was to build, train, and deploy a deep learning pipeline that could transform the three-panel 3DS layout into a new j-card design. The model of choice was Pix2Pix, a conditional GAN known for excelling at image-to-image translation tasks. The process was broken down into four key phases.</p>
+                    </div>
+                    
+                    <div class="timeline-container overflow-x-auto pb-8 pt-2 -mx-2 px-2">
+                        <div class="flex space-x-6 w-max px-2">
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 1: Data Acquisition</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">The initial challenge was sourcing data. A repeatable pipeline was engineered by developing scripts to scrape and parse game codes and titles from databases like 3dsdb and GameTDB, establishing a foundational dataset of 157 cover scans.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 2: Image Segmentation</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">A semi-automated GUI tool was built in Python with OpenCV to segment covers into their core components. This tool leveraged computer vision techniques like edge detection and template matching within an interactive workflow, drastically reducing manual processing time.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 3: Model Training</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">Specialized sub-models were trained using a human-in-the-loop (HITL) feedback cycle. A critical lesson emerged when the decision to compress images into square formats created a significant roadblock, highlighting the importance of thoughtful data preprocessing.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 4: Iteration & Refinement</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">The final phase involved a continuous loop of hyperparameter tuning and refinement on Google Colab. The warping issue from the previous phase underscored a core principle: robust data preparation is often more critical than complex model architecture adjustments.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">Current State & <span class="text-orange-500">Next Steps</span></h3>
+                        <p>Despite the setbacks, the vision remains intact: to build a pipeline where a new 3DS cover can be segmented, processed, and emerge as a coherent j-card. The focus is now on continuous iteration and refinement, shaping the model to not only translate formats but also preserve the aesthetic personality that makes these designs feel authentic.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileMenuButton = document.querySelector('.md\\:hidden');
+                // You would add click handler here for mobile menu
+                
+                // Timeline horizontal scroll with mouse wheel
+                const timelines = document.querySelectorAll('.timeline-container');
+                timelines.forEach(timeline => {
+                    if (timeline) {
+                        timeline.addEventListener('wheel', (e) => {
+                            if (e.deltaY === 0) return;
+                            e.preventDefault();
+                            timeline.scrollLeft += e.deltaY;
+                        }, { passive: false });
+                    }
+                });
+
+                // Case study overlay handlers
+                const overlay = document.getElementById('caseStudyOverlay');
+                const openBtn = document.getElementById('readCaseStudy');
+                const closeBtn = document.getElementById('closeOverlay');
+
+                if (openBtn && overlay && closeBtn) {
+                    openBtn.addEventListener('click', () => {
+                        overlay.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    });
+
+                    closeBtn.addEventListener('click', () => {
+                        overlay.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    });
+                }
+            });
+        </script>
+</body>
+</html>
