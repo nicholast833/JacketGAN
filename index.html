@@ -61,8 +61,9 @@
                 <span class="text-xl font-bold">Jacket<span class="text-orange-500">GAN</span></span>
             </div>
             <div class="hidden md:flex space-x-6">
-                <a href="#overview" class="hover:text-orange-500 transition">Overview</a>
                 <a href="#timeline" class="hover:text-orange-500 transition">Timeline</a>
+                <a href="#overview" class="hover:text-orange-500 transition">Overview</a>
+                <a href="#etl" class="hover:text-orange-500 transition">ETL</a>
                 <a href="#results" class="hover:text-orange-500 transition">Results</a>
                 <a href="#about" class="hover:text-orange-500 transition">About</a>
             </div>
@@ -210,6 +211,20 @@
             </div>
         </section>
 
+        <section id="etl" class="mb-20">
+          <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">
+            ETL Process
+          </h2>
+          <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+
+            <iframe src="ETL2.html"
+                    style="width:100%; height:600px; border:none;"
+                    title="ETL Diagram">
+            </iframe>
+
+          </div>
+        </section>
+
         <section id="results" class="mb-20">
             <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Quantitative Results</h2>
             <div class="grid md:grid-cols-2 gap-8">
@@ -255,25 +270,6 @@
                 </div>
             </div>
         </section>
-
-        <footer class="bg-gray-800 border-t border-gray-700 py-8 px-6">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-4 md:mb-0">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-6 h-6 bg-orange-500 rounded-full"></div>
-                            <span class="text-lg font-bold">Jacket<span class="text-orange-500">GAN</span></span>
-                        </div>
-                        <p class="text-sm text-gray-500 mt-2">Generative jacket design models</p>
-                    </div>
-                    <div class="flex justify-center space-x-6 mt-4 md:mt-0">
-                        <a href="https://github.com/nicholast833" class="text-gray-400 hover:text-orange-500 transition" target="_blank"><i class="fab fa-github text-xl"></i></a>
-                        <a href="https://www.linkedin.com/in/nicholast833/" class="text-gray-400 hover:text-orange-500 transition" target="_blank"><i class="fab fa-linkedin text-xl"></i></a>
-                        <a href="https://nicholast833.github.io/Portfolio/" class="text-gray-400 hover:text-orange-500 transition" target="_blank"><i class="fas fa-paper-plane text-xl"></i></a>
-                    </div>
-                </div>
-            </div>
-        </footer>
 
 
         <div id="caseStudyOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-50 overflow-y-auto hidden">
