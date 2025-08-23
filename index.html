@@ -86,7 +86,6 @@
     <main class="max-w-6xl mx-auto px-6 py-12">
         <section id="timeline" class="mb-20">
             <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Development Timeline</h2>
-            <p class="text-gray-400 mb-12 max-w-3xl">Scroll horizontally to explore the evolution of our GAN model through key iterations. Hover on any image to view detailed technical notes about that version.</p>
             
             <div class="timeline-container overflow-x-auto pb-8 pt-2 px-2">
                 <div class="flex space-x-8 w-max px-4">
@@ -187,25 +186,26 @@
             <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Project Overview</h2>
             <div class="space-y-6 text-gray-300 leading-relaxed">
                 <p>
-                    This case study chronicles a multi-month project focused on building and refining a Generative Adversarial Network (GAN) to create high-resolution j-card "jacket" designs. What began as frustration with overpriced, manually reformatted game art evolved into a structured research project exploring the intersection of AI and independent digital media production.
+                    This case study chronicles a multi-month project to build and refine a Generative Adversarial Network (GAN) for creating high-resolution j-card “jacket” designs. This project was inspired by frustration with the high cost and labor that goes into manually reformatting game art, especially given the high price these pieces can fetch.
                 </p>
                 <p>
-                    The project addresses a specific problem: the translation of three-part Nintendo 3DS game case covers into j-card layouts. These covers were sourced from databases like GameTDB and The Cover Project, with the goal of automating a process that typically takes 30-45 minutes per cover when done manually.
+                    The project addresses a specific, monotonous, and labor-intensive problem: the translation of three-part Nintendo 3DS game case covers into j-card layouts. When done manually, this process can take 20-45 minutes per cover. As a case in point, creating just 37 covers for the mainline Pokémon games took roughly two weeks of on-and-off work. The goal was to build a deep learning pipeline that could automate this task intelligently.
                 </p>
                 <p>
-                    The core solution involves a Pix2Pix conditional GAN pipeline specialized for image-to-image translation tasks. The approach leverages transfer learning to accelerate training and improve output fidelity, breaking the complex transformation into manageable sub-models that handle different components of the j-card design.
+                    The core solution is an ETL pipeline powered by **Pix2Pix**, a conditional GAN framework known for image-to-image translation. The process involved scraping 157 high-quality 3DS cover scans using game serial IDs from databases like 3dsdb and GameTDB. These source images were paired with 50 manually created "target" images, which served as the ground truth for training. The project was intentionally scoped to 3DS covers to ensure a manageable and high-quality dataset could be sourced.
                 </p>
                 <p>
-                    Key challenges included data acquisition through structured parsing of game codes, developing an interactive segmentation tool using OpenCV for consistent input formatting, and navigating the iterative process of model training and refinement. The project emphasizes the importance of proper data preparation over complex architectural changes, as evidenced by lessons learned from early image compression decisions.
+                    Key challenges included developing a semi-automated GUI tool using OpenCV for consistent image segmentation and navigating the iterative process of model training and refinement. The project ultimately trained eight specialized sub-models in a human-in-the-loop cycle, underscoring a core lesson: robust data preparation is often more critical than complex architectural changes. Currently, the top-performing model achieves about 80% of the desired output, with a clear path to improvement by expanding the training set.
                 </p>
                 <div class="mt-8 p-6 bg-gray-800 rounded-lg border-l-4 border-orange-500">
                     <h3 class="text-xl font-semibold mb-4 text-orange-400">Methodology Highlights</h3>
                     <ul class="space-y-3 list-disc list-inside">
-                        <li>Pix2Pix conditional GAN architecture for image translation</li>
-                        <li>Structured data acquisition from GameTDB and 3dsdb sources</li>
-                        <li>Interactive segmentation tool with OpenCV edge detection</li>
-                        <li>Specialized sub-models for different j-card components</li>
-                        <li>Human-in-the-loop feedback cycle for continuous improvement</li>
+                        <li>**Pix2Pix Architecture**: Utilized a U-Net based Generator and a PatchGAN Discriminator for the image translation task.</li>
+                        <li>**Structured Data Acquisition**: Sourced an initial dataset of 157 covers from GameTDB and 3dsdb.</li>
+                        <li>**Semi-Automated Segmentation**: Built an interactive tool with OpenCV for edge detection and template matching to segment covers into 6 sections.</li>
+                        <li>**Specialized Sub-Models**: Trained 8 distinct sub-models to handle different components of the j-card design.</li>
+                        <li>**Accelerated Training**: Leveraged Google Colab Pro with A100 GPUs and enabled mixed-precision for significant speed gains.</li>
+                        <li>**Human-in-the-Loop Feedback**: Used an iterative HITL cycle for continuous model refinement and improvement.</li>
                     </ul>
                 </div>
             </div>
@@ -218,7 +218,7 @@
           <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
 
             <iframe src="ETL2.html"
-                    style="width:100%; height:700px; border:none;"
+                    style="width:100%; height:750px; border:none;"
                     title="ETL Diagram">
             </iframe>
 
@@ -284,19 +284,19 @@
                     
                     <div class="p-6 border-l-4 border-orange-500 bg-gray-800 rounded-r-lg">
                         <h3 class="text-2xl font-bold text-orange-400 mb-2">Background</h3>
-                        <p class="text-lg">This case study chronicles a multi-month project to build and refine a Generative Adversarial Network (GAN) for creating high-resolution j-card “jacket” designs. What started as a frustration with overpriced, manually reformatted game art evolved into a structured research project, blending technical rigor with creative experimentation to explore the intersection of AI and independent digital media production.</p>
+                        <p class="text-lg">This case study chronicles a multi-month project to design, build, and refine a Generative Adversarial Network (GAN) for creating high-resolution j-card “jacket” designs. The project began over two years ago, not with the intention of automating the process, but simply to avoid paying the roughly $7.50 per printed image often charged by sellers. It evolved into a structured project exploring the intersection of AI and digital media production.</p>
                     </div>
 
                     <div>
                         <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">The Problem: <span class="text-orange-500">Digital Labor Meets AI</span></h3>
-                        <p>The project began not as a technical challenge, but as a question: When does AI-driven media production overlap with the work of independent sellers on platforms like Etsy? J-card jackets—the inserts for cassette tapes—perfectly capture this dynamic. Many Etsy sellers take existing cover art, reformat it, and sell it for a significant markup. A simple design task, it turns out, can translate into real income.</p>
-                        <br></br>
-                        <p>The focus was on a specific translation: taking a three-part Nintendo 3DS game case cover and converting it into a j-card layout. The motivation was personal; seeing overpriced Etsy listings for game covers felt absurd. The manual work of creating my own versions was draining, taking 30–45 minutes per cover. Early attempts at automation with a simple Python script yielded crude results. It was clear that a better approach was needed—one that could learn and create, not just resize and paste.</p>
+                        <p>The manual process of creating j-card jackets is simplistic but monotonous, involving sourcing cover art, using content-aware scaling, and making other adjustments. The primary focus was converting three-part Nintendo 3DS or GBA covers, which took 20-45 minutes each. This process was incredibly labor-intensive; creating 37 covers for the mainline Pokemon games took about two weeks of work.</p>
+                        <br>
+                        <p>Early attempts at automation using simple Python scripts to stretch images yielded crude results unworthy of the price tag they aimed to compete with. It became clear that a more sophisticated approach was needed—one that could understand what a "correct" format is and preserve image information, rather than just performing basic resizing operations.</p>
                     </div>
                     
                     <div>
                         <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">The Solution: <span class="text-orange-500">A GAN-Powered Pipeline</span></h3>
-                        <p>The core objective was to build, train, and deploy a deep learning pipeline that could transform the three-panel 3DS layout into a new j-card design. The model of choice was Pix2Pix, a conditional GAN known for excelling at image-to-image translation tasks. The process was broken down into four key phases.</p>
+                        <p>The project was revisited with a new objective: build, train, and deploy a deep learning ETL pipeline to transform a three-panel 3DS layout into a j-card design. The model of choice was **Pix2Pix**, a conditional GAN framework known for excelling at image-to-image translation tasks. The process was broken down into four key phases.</p>
                     </div>
                     
                     <div class="timeline-container overflow-x-auto pb-8 pt-2 -mx-2 px-2">
@@ -305,37 +305,51 @@
                             <div class="w-80 flex-shrink-0">
                                 <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
                                     <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 1: Data Acquisition</h4>
-                                    <p class="text-gray-400 text-sm flex-grow">The initial challenge was sourcing data. A repeatable pipeline was engineered by developing scripts to scrape and parse game codes and titles from databases like 3dsdb and GameTDB, establishing a foundational dataset of 157 cover scans.</p>
+                                    <p class="text-gray-400 text-sm flex-grow">The 3DS format was chosen for the ease of sourcing covers. A Python script was used to generate download links by combining game serial IDs from 3dsdb and GameTDB, resulting in a foundational dataset of 157 high-quality cover scans.</p>
                                 </div>
                             </div>
                             
                             <div class="w-80 flex-shrink-0">
                                 <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
                                     <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 2: Image Segmentation</h4>
-                                    <p class="text-gray-400 text-sm flex-grow">A semi-automated GUI tool was built in Python with OpenCV to segment covers into their core components. This tool leveraged computer vision techniques like edge detection and template matching within an interactive workflow, drastically reducing manual processing time.</p>
+                                    <p class="text-gray-400 text-sm flex-grow">A semi-automated GUI tool utilizing OpenCV was built to segment the covers into 6 sections using edge detection and template matching. These segmented pieces were then paired with 50 hand-crafted "target" images, which took over 10 hours to create and served as the desired output for the model.</p>
                                 </div>
                             </div>
                             
                             <div class="w-80 flex-shrink-0">
                                 <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
                                     <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 3: Model Training</h4>
-                                    <p class="text-gray-400 text-sm flex-grow">Specialized sub-models were trained using a human-in-the-loop (HITL) feedback cycle. A critical lesson emerged when the decision to compress images into square formats created a significant roadblock, highlighting the importance of thoughtful data preprocessing.</p>
+                                    <p class="text-gray-400 text-sm flex-grow">Using the 50 target images and the source data, 8 specialized sub-models were trained in a human-in-the-loop (HITL) feedback cycle. Training was conducted on Google Colab Pro using A100 GPUs. A detailed training script ensured reproducibility, managing everything from hyperparameter tuning to logging and model exporting.</p>
                                 </div>
                             </div>
                             
                             <div class="w-80 flex-shrink-0">
                                 <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
                                     <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 4: Iteration & Refinement</h4>
-                                    <p class="text-gray-400 text-sm flex-grow">The final phase involved a continuous loop of hyperparameter tuning and refinement on Google Colab. The warping issue from the previous phase underscored a core principle: robust data preparation is often more critical than complex model architecture adjustments.</p>
+                                    <p class="text-gray-400 text-sm flex-grow">The final phase involved a continuous loop of hyperparameter tuning and refinement on Google Colab. Issues encountered during training underscored a core principle: robust data preparation is often more critical than complex model architecture adjustments.</p>
                                 </div>
                             </div>
                             
                         </div>
                     </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">Technical Details: <span class="text-orange-500">Training Specification</span></h3>
+                        <p>The model training was a highly structured process. Each of the eight sub-models followed a standard Pix2Pix architecture with a U-Net based Generator and a PatchGAN Discriminator. Key training parameters and techniques included:</p>
+                        <ul class="list-disc list-inside space-y-2 mt-4 pl-4 text-gray-400">
+                            <li><strong>Hardware:</strong> Google Colab Pro with NVIDIA A100 GPUs (40GB VRAM).</li>
+                            <li><strong>Performance:</strong> Mixed-precision was enabled for significant speed gains.</li>
+                            <li><strong>Image Size:</strong> Models were trained on 256x256 and later 512x512 images for higher output fidelity.</li>
+                            <li><strong>Augmentation:</strong> Applied random flips, brightness, and contrast shifts to improve generalization.</li>
+                            <li><strong>Regularization:</strong> Used label smoothing (real=0.9) to stabilize discriminator performance.</li>
+                            <li><strong>Hyperparameters:</strong> Epochs ranged from 150–300, batch size was kept at 8, and separate learning rates were set for the Generator (0.0002) and Discriminator (0.0001) with exponential decay.</li>
+                            <li><strong>Monitoring:</strong> Sample images were generated every 20 epochs for visual quality assessment, and all losses were logged.</li>
+                        </ul>
+                    </div>
                     
                     <div>
                         <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">Current State & <span class="text-orange-500">Next Steps</span></h3>
-                        <p>Despite the setbacks, the vision remains intact: to build a pipeline where a new 3DS cover can be segmented, processed, and emerge as a coherent j-card. The focus is now on continuous iteration and refinement, shaping the model to not only translate formats but also preserve the aesthetic personality that makes these designs feel authentic.</p>
+                        <p>In its current state, the top performing model produces results that are roughly 80% of a desired output—a passable attempt with some obvious flaws. With further work, such as increasing the training set size to 100 or more target images, the model could potentially achieve a sellable result. For the moment, however, the creator is satisfied with the current iteration and is eager to take on new projects.</p>
                     </div>
                 </div>
             </div>
