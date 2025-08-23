@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAN Model Evolution Case Study</title>
+    <title>JacketGAN</title>
+    <link rel="icon" href="https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-flat/256/Orange-Circle-Flat-icon.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom CSS for timeline animation */
         .timeline-container {
             scrollbar-width: thin;
             scrollbar-color: #f97316 #374151;
-            padding-bottom: 20px; /* Space for scrollbar */
+            padding-bottom: 20px; 
         }
         .timeline-container::-webkit-scrollbar {
             height: 8px;
@@ -77,7 +77,6 @@
         <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-6">Jacket<span class="text-orange-500">GAN</span></h1>
             <div class="flex justify-center space-x-4">
-                <a href="#timeline" class="bg-orange-500 hover:bg-orange-600 text-gray-900 font-semibold px-6 py-3 rounded-lg transition">View Timeline</a>
                 <button id="readCaseStudy" class="border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-gray-900 font-semibold px-6 py-3 rounded-lg transition">Read Case Study</button>
             </div>
         </div>
@@ -192,7 +191,7 @@
                     The project addresses a specific, monotonous, and labor-intensive problem: the translation of three-part Nintendo 3DS game case covers into j-card layouts. When done manually, this process can take 20-45 minutes per cover. As a case in point, creating just 37 covers for the mainline Pokémon games took roughly two weeks of on-and-off work. The goal was to build a deep learning pipeline that could automate this task intelligently.
                 </p>
                 <p>
-                    The core solution is an ETL pipeline powered by **Pix2Pix**, a conditional GAN framework known for image-to-image translation. The process involved scraping 157 high-quality 3DS cover scans using game serial IDs from databases like 3dsdb and GameTDB. These source images were paired with 50 manually created "target" images, which served as the ground truth for training. The project was intentionally scoped to 3DS covers to ensure a manageable and high-quality dataset could be sourced.
+                    The core solution is an ETL pipeline powered by Pix2Pix, a conditional GAN framework known for image-to-image translation. The process involved scraping 157 high-quality 3DS cover scans using game serial IDs from databases like 3dsdb and GameTDB. These source images were paired with 50 manually created "target" images, which served as the ground truth for training. The project was intentionally scoped to 3DS covers to ensure a manageable and high-quality dataset could be sourced.
                 </p>
                 <p>
                     Key challenges included developing a semi-automated GUI tool using OpenCV for consistent image segmentation and navigating the iterative process of model training and refinement. The project ultimately trained eight specialized sub-models in a human-in-the-loop cycle, underscoring a core lesson: robust data preparation is often more critical than complex architectural changes. Currently, the top-performing model achieves about 80% of the desired output, with a clear path to improvement by expanding the training set.
@@ -200,12 +199,12 @@
                 <div class="mt-8 p-6 bg-gray-800 rounded-lg border-l-4 border-orange-500">
                     <h3 class="text-xl font-semibold mb-4 text-orange-400">Methodology Highlights</h3>
                     <ul class="space-y-3 list-disc list-inside">
-                        <li>**Pix2Pix Architecture**: Utilized a U-Net based Generator and a PatchGAN Discriminator for the image translation task.</li>
-                        <li>**Structured Data Acquisition**: Sourced an initial dataset of 157 covers from GameTDB and 3dsdb.</li>
-                        <li>**Semi-Automated Segmentation**: Built an interactive tool with OpenCV for edge detection and template matching to segment covers into 6 sections.</li>
-                        <li>**Specialized Sub-Models**: Trained 8 distinct sub-models to handle different components of the j-card design.</li>
-                        <li>**Accelerated Training**: Leveraged Google Colab Pro with A100 GPUs and enabled mixed-precision for significant speed gains.</li>
-                        <li>**Human-in-the-Loop Feedback**: Used an iterative HITL cycle for continuous model refinement and improvement.</li>
+                        <li>Pix2Pix Architecture: Utilized a U-Net based Generator and a PatchGAN Discriminator for the image translation task.</li>
+                        <li>Structured Data Acquisition: Sourced an initial dataset of 157 covers from GameTDB and 3dsdb.</li>
+                        <li>Semi-Automated Segmentation: Built an interactive tool with OpenCV for edge detection and template matching to segment covers into 6 sections.</li>
+                        <li>Specialized Sub-Models: Trained 8 distinct sub-models to handle different components of the j-card design.</li>
+                        <li>Accelerated Training: Leveraged Google Colab Pro with A100 GPUs and enabled mixed-precision for significant speed gains.</li>
+                        <li>Human-in-the-Loop Feedback: Used an iterative HITL cycle for continuous model refinement and improvement.</li>
                     </ul>
                 </div>
             </div>
@@ -218,7 +217,7 @@
           <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
 
             <iframe src="ETL2.html"
-                    style="width:100%; height:750px; border:none;"
+                    style="width:100%; height:725px; border:none;"
                     title="ETL Diagram">
             </iframe>
 
@@ -296,7 +295,7 @@
                     
                     <div>
                         <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">The Solution: <span class="text-orange-500">A GAN-Powered Pipeline</span></h3>
-                        <p>The project was revisited with a new objective: build, train, and deploy a deep learning ETL pipeline to transform a three-panel 3DS layout into a j-card design. The model of choice was **Pix2Pix**, a conditional GAN framework known for excelling at image-to-image translation tasks. The process was broken down into four key phases.</p>
+                        <p>The project was revisited with a new objective: build, train, and deploy a deep learning ETL pipeline to transform a three-panel 3DS layout into a j-card design. The model of choice was Pix2Pix, a conditional GAN framework known for excelling at image-to-image translation tasks. The process was broken down into four key phases.</p>
                     </div>
                     
                     <div class="timeline-container overflow-x-auto pb-8 pt-2 -mx-2 px-2">
@@ -358,9 +357,6 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const mobileMenuButton = document.querySelector('.md\\:hidden');
-                // You would add click handler here for mobile menu
-                
-                // Timeline horizontal scroll with mouse wheel
                 const timelines = document.querySelectorAll('.timeline-container');
                 timelines.forEach(timeline => {
                     if (timeline) {
@@ -372,7 +368,6 @@
                     }
                 });
 
-                // Case study overlay handlers
                 const overlay = document.getElementById('caseStudyOverlay');
                 const openBtn = document.getElementById('readCaseStudy');
                 const closeBtn = document.getElementById('closeOverlay');
