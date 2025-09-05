@@ -3,239 +3,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFC ResuMe</title>
+    <title>JacketGAN</title>
+    <link rel="icon" href="https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-flat/256/Orange-Circle-Flat-icon.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12' }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        .gradient-bg { background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 1) 100%); }
-        .contact-card { transition: all 0.3s ease; }
-        .contact-card.linkedin-card { box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
-        .contact-card.linkedin-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.4); }
-        .contact-card.handshake-card { box-shadow: 0 4px 10px rgba(101, 163, 13, 0.2); }
-        .contact-card.handshake-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(101, 163, 13, 0.4); }
-        .contact-card.email-card { box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2); }
-        .contact-card.email-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(239, 68, 68, 0.4); }
-        @keyframes pulsing-glow {
-            0% { text-shadow: 0 0 4px rgba(251, 146, 60, 0.5); }
-            50% { text-shadow: 0 0 16px rgba(251, 146, 60, 0.9); }
-            100% { text-shadow: 0 0 4px rgba(251, 146, 60, 0.5); }
+        .timeline-container {
+            scrollbar-width: thin;
+            scrollbar-color: #f97316 #374151;
+            padding-bottom: 20px; 
         }
-        .nfc-glow { animation: pulsing-glow 1.5s ease-in-out infinite; }
-        #dataPopup { opacity: 1; transform: translateY(0) scale(1); transition: all 0.3s ease-out; pointer-events: auto; }
-        #dataPopup.is-hidden { opacity: 0; transform: translateY(20px) scale(0.95); pointer-events: none; }
+        .timeline-container::-webkit-scrollbar {
+            height: 8px;
+            width: 60%;
+            margin: 0 auto;
+        }
+        .timeline-container::-webkit-scrollbar-track {
+            background: #374151;
+            border-radius: 4px;
+        }
+        .timeline-container::-webkit-scrollbar-thumb {
+            background-color: #f97316;
+            border-radius: 4px;
+        }
+        .timeline-container:hover {
+            scrollbar-color: #f97316 #4b5563;
+        }
+        .timeline-container:hover::-webkit-scrollbar-track {
+            background: #4b5563;
+        }
+        
+        .timeline-item {
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .caption-block {
+            opacity: 1;
+            max-height: 100px;
+            padding-top: 1rem;
+        }
+        
+        /* Custom orange gradient */
+        .orange-gradient {
+            background: linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.05) 100%);
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
-    <div class="gradient-bg min-h-screen">
-        <header class="container mx-auto px-4 py-8"></header>
-        <section class="container mx-auto px-4 pt-8 md:pt-16 pb-8">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="w-full text-center">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8">
-                        <span class="text-primary-400">Hello,</span> I'm Nicholas Taylor
-                    </h1>
-                    <h2 class="text-2xl md:text-3xl text-gray-300 mb-8">
-                        Data Visualization Student at UW
-                    </h2>
-                    <p id="welcome-text" class="text-gray-400 mb-8 max-w-2xl mx-auto">
-                        Thank you for visiting my landing page. I invite you to explore my portfolio and connect with me on my professional platforms.
-                    </p>
-                    <div class="flex justify-center space-x-4">
-                        <a href="https://nicholast833.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" class="track-click border border-primary-500 text-primary-400 hover:bg-primary-900 hover:bg-opacity-20 px-6 py-3 rounded-full transition duration-300 flex items-center" data-track-name="Portfolio">
-                            <i class="fas fa-eye mr-2"></i> View Portfolio
-                        </a>
-                        <a href="https://nicholast833.github.io/Resume/NicholasTaylor-Resume.pdf" target="_blank" rel="noopener noreferrer" download="Resume.pdf" class="track-click border border-primary-500 text-primary-400 hover:bg-primary-900 hover:bg-opacity-20 px-6 py-3 rounded-full transition duration-300 flex items-center" data-track-name="Resume">
-                            <i class="fas fa-download mr-2"></i> Download Resume
-                        </a>
+<body class="bg-gray-900 text-gray-200 min-h-screen font-sans">
+    <nav class="bg-gray-800 border-b border-gray-700 py-4 px-6 sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-orange-500 rounded-full"></div>
+                <span class="text-xl font-bold">Jacket<span class="text-orange-500">GAN</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#timeline" class="hover:text-orange-500 transition">Timeline</a>
+                <a href="#overview" class="hover:text-orange-500 transition">Overview</a>
+                <a href="#etl" class="hover:text-orange-500 transition">ETL</a>
+                <a href="#results" class="hover:text-orange-500 transition">Results</a>
+                <a href="#about" class="hover:text-orange-500 transition">About</a>
+            </div>
+            <button class="md:hidden text-gray-300">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="py-20 px-6 orange-gradient">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Jacket<span class="text-orange-500">GAN</span></h1>
+            <div class="flex justify-center space-x-4">
+                <button id="readCaseStudy" class="border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-gray-900 font-semibold px-6 py-3 rounded-lg transition">Read Case Study</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <section id="timeline" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Development Timeline</h2>
+            
+            <div class="timeline-container overflow-x-auto pb-8 pt-2 px-2">
+                <div class="flex space-x-8 w-max px-4">
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_A_PG_Pad_Aug_d50_200eccf96f5b0b74c427.md.png" alt="Model 1 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PG-Pad-Aug d50-200e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 1</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">This model uses a Progressive Growing (PG) architecture with padding and data augmentation, trained for 200 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_A_PGv4_RefPad_d50_300ed3a7162bc553f5a8.png" alt="Model 2 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PGv4-RefPad d50-300e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 2</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">The 4th version of the PG model, using reflection padding. It was trained for 300 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_B_PGv5_RefPad_d50_300e.md.png" alt="Model 3 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PGv5-RefPad d50-300e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 3</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">The 5th version of the PG model, also using reflection padding and trained for 300 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_B_PG_Aug_d50_200e0a8c4d8b2bff6a8a.md.png" alt="Model 4 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">PG-Aug d50-200e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 4</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">This iteration returns to the original PG architecture with augmentation, trained for 200 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_C_Std_d25_150ea794f907b8ed3c99.md.png" alt="Model 5 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">Std d25-150e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 5</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">A standard (non-progressive) architecture with a dataset split of 25%, trained for 150 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item w-72 flex-shrink-0">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <img src="https://cdn.allthepics.net/images/2025/08/22/Set_C_Std_VLR_L_d48_250ece4209dd348588ee.md.png" alt="Model 6 Output" class="w-full h-48 object-cover">
+                            <div class="p-4 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold">Std-VLR-L d48-250e</h3>
+                                    <span class="text-xs bg-gray-700 px-2 py-1 rounded">Model 6</span>
+                                </div>
+                                <div class="caption-block">
+                                    <p class="text-sm text-gray-400">This standard model uses a very low learning rate (VLR) and a larger dataset split (48%), trained for 250 epochs.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="container mx-auto px-4 pt-2 pb-4">
-            <h3 class="text-xl text-center text-gray-300 mb-8">
-                Let's Get in Touch
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                 <div class="contact-card linkedin-card bg-gray-800 rounded-xl p-6 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center mb-4"> <i class="fab fa-linkedin-in text-white text-2xl"></i> </div>
-                    <a href="https://www.linkedin.com/in/nicholast833/" target="_blank" class="mt-auto w-full"> 
-                        <button class="track-click w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition duration-300" data-track-name="LinkedIn"> LinkedIn </button> 
-                    </a>
-                </div>
-                <div class="contact-card handshake-card bg-gray-800 rounded-xl p-6 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 rounded-full bg-lime-600 flex items-center justify-center mb-4"> <i class="fas fa-handshake text-white text-2xl"></i> </div>
-                    <a href="https://app.joinhandshake.com/profiles/nicholast833" target="_blank" class="mt-auto w-full"> 
-                        <button class="track-click w-full bg-lime-600 hover:bg-lime-700 text-white py-2 rounded-lg transition duration-300" data-track-name="Handshake"> Handshake </button> 
-                    </a>
-                </div>
-                <div class="contact-card email-card bg-gray-800 rounded-xl p-6 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center mb-4"> <i class="fas fa-envelope text-white text-2xl"></i> </div>
-                    <button id="email-btn" data-email="nicholast833@gmail.com" class="track-click mt-auto w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-300" data-track-name="Email">
-                        Email
-                    </button>
+
+        <section id="overview" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Project Overview</h2>
+            <div class="space-y-6 text-gray-300 leading-relaxed">
+                <p>
+                    This case study chronicles a multi-month project to build and refine a Generative Adversarial Network (GAN) for creating high-resolution j-card “jacket” designs. This project was inspired by frustration with the high cost and labor that goes into manually reformatting game art, especially given the high price these pieces can fetch.
+                </p>
+                <p>
+                    The project addresses a specific, monotonous, and labor-intensive problem: the translation of three-part Nintendo 3DS game case covers into j-card layouts. When done manually, this process can take 20-45 minutes per cover. As a case in point, creating just 37 covers for the mainline Pokémon games took roughly two weeks of on-and-off work. The goal was to build a deep learning pipeline that could automate this task intelligently.
+                </p>
+                <p>
+                    The core solution is an ETL pipeline powered by Pix2Pix, a conditional GAN framework known for image-to-image translation. The process involved scraping 157 high-quality 3DS cover scans using game serial IDs from databases like 3dsdb and GameTDB. These source images were paired with 50 manually created "target" images, which served as the ground truth for training. The project was intentionally scoped to 3DS covers to ensure a manageable and high-quality dataset could be sourced.
+                </p>
+                <p>
+                    Key challenges included developing a semi-automated GUI tool using OpenCV for consistent image segmentation and navigating the iterative process of model training and refinement. The project ultimately trained eight specialized sub-models in a human-in-the-loop cycle, underscoring a core lesson: robust data preparation is often more critical than complex architectural changes. Currently, the top-performing model achieves about 80% of the desired output, with a clear path to improvement by expanding the training set.
+                </p>
+                <div class="mt-8 p-6 bg-gray-800 rounded-lg border-l-4 border-orange-500">
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">Methodology Highlights</h3>
+                    <ul class="space-y-3 list-disc list-inside">
+                        <li>Pix2Pix Architecture: Utilized a U-Net based Generator and a PatchGAN Discriminator for the image translation task.</li>
+                        <li>Structured Data Acquisition: Sourced an initial dataset of 157 covers from GameTDB and 3dsdb.</li>
+                        <li>Semi-Automated Segmentation: Built an interactive tool with OpenCV for edge detection, segmenting images into 6 sections.</li>
+                        <li>Specialized Sub-Models: Trained 8 distinct sub-models to handle different components of the j-card design.</li>
+                        <li>Accelerated Training: Leveraged Google Colab Pro with A100 GPUs and enabled mixed-precision for significant speed gains.</li>
+                        <li>Human-in-the-Loop Feedback: Used an iterative HITL cycle for continuous model refinement and improvement.</li>
+                    </ul>
                 </div>
             </div>
         </section>
-        <div id="dataPopup" class="fixed bottom-4 right-4 z-50 max-w-xs bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-2xl overflow-hidden is-hidden">
-            <div id="popupHeader" class="flex justify-between items-center bg-gray-900/50 px-4 py-2 border-b border-gray-700 transition-all duration-300">
-                <h3 class="text-gray-200 font-semibold text-sm flex items-center"><i class="fas fa-chart-line mr-2 text-primary-400"></i>Survey</h3>
-                <button id="hidePopup" class="text-gray-400 hover:text-white focus:outline-none transition-colors"><i class="fas fa-times"></i></button>
-            </div>
-            <div id="popupContent" class="p-4 text-center transition-all duration-300">
-                <div id="formSection">
-                    <p class="text-gray-200 mb-2 text-sm">Love Data? Me too!</p>
-                    <p class="text-gray-400 text-xs mb-3">If you're representing a company, I'd appreciate you sharing its name.</p>
-                    <input type="text" id="companyInput" placeholder="Your Company" class="w-full bg-gray-700 text-white px-3 py-2 rounded-md mb-3 text-sm text-center focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
-                    <button id="submitCompany" class="w-full border border-primary-500 text-primary-400 hover:bg-primary-900/40 px-3 py-2 rounded-md text-sm transition duration-300">Submit</button>
+
+        <section id="etl" class="mb-20">
+          <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">
+            ETL Process
+          </h2>
+          <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+
+            <iframe src="ETL2.html"
+                    style="width:100%; height:725px; border:none;"
+                    title="ETL Diagram">
+            </iframe>
+
+          </div>
+        </section>
+
+        <section id="results" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">Quantitative Results</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">PSNR Comparison</h3>
+                    <img src="https://cdn.allthepics.net/images/2025/08/22/PSNR_Comparison.png" alt="PSNR Scores Chart" class="rounded">
+                    <p class="mt-4 text-gray-400">
+                        Peak Signal-to-Noise Ratio (PSNR) measures image quality by comparing the maximum possible power of a signal to the power of corrupting noise. Higher PSNR values generally indicate higher quality reconstructions.
+                    </p>
                 </div>
-                <div id="thankYouSection" class="hidden text-center">
-                    <p class="text-gray-200 text-lg font-semibold">Thank You!</p>
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-orange-400">SSIM Comparison</h3>
+                    <img src="https://cdn.allthepics.net/images/2025/08/22/SSIM_Comparison.png" alt="SSIM Scores Chart" class="rounded">
+                    <p class="mt-4 text-gray-400">
+                        The Structural Similarity Index Measure (SSIM) assesses the perceptual difference between two images. It is better aligned with human visual perception than PSNR. A value closer to 1 indicates a higher similarity.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-orange-500 pl-4">About the Creator</h2>
+            <div class="bg-gray-800 rounded-lg p-8 max-w-2xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <img src="https://i.postimg.cc/8PSk8Sbn/kirby-Button-1.gif" alt="Profile Picture" class="w-32 h-32 rounded-full object-cover border-2 border-orange-500 flex-shrink-0">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Nicholas Taylor</h3>
+                        <p class="text-gray-400 mb-4">
+                            Hey! Thanks for checking out this project. I'm a Data Visualization student at the University of Washington, and if you like this project I'd love to connect! Check me out on the paltforms below.
+                        </p>
+                        <div class="flex justify-center space-x-6">
+                            <a href="https://www.linkedin.com/in/nicholast833/" class="text-orange-500 hover:text-orange-400 transition" target="_blank">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="https://github.com/nicholast833" class="text-orange-500 hover:text-orange-400 transition" target="_blank">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="https://nicholast833.github.io/Portfolio/" class="text-orange-500 hover:text-orange-400 transition" target="_blank">
+                                <i class="fas fa-paper-plane text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div id="caseStudyOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-50 overflow-y-auto hidden">
+            <div class="max-w-4xl mx-auto py-20 px-6 text-gray-300">
+                <div class="flex justify-between items-center mb-12">
+                    <h2 class="text-3xl font-bold text-white">Case Study: <span class="text-orange-500">JacketGAN</span></h2>
+                    <button id="closeOverlay" class="text-gray-400 hover:text-orange-500 text-3xl transition-colors duration-300">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                </div>
+                <div class="prose prose-invert max-w-none space-y-6 leading-relaxed">
+                    
+                    <div class="p-6 border-l-4 border-orange-500 bg-gray-800 rounded-r-lg">
+                        <h3 class="text-2xl font-bold text-orange-400 mb-2">Background</h3>
+                        <p class="text-lg">This case study chronicles a multi-month project to design, build, and refine a Generative Adversarial Network (GAN) for creating high-resolution j-card “jacket” designs. The project began over two years ago, not with the intention of automating the process, but simply to avoid paying the roughly $7.50 per printed image often charged by sellers. It evolved into a structured project exploring the intersection of AI and digital media production.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">The Problem: <span class="text-orange-500">Digital Labor Meets AI</span></h3>
+                        <p>The manual process of creating j-card jackets is simplistic but monotonous, involving sourcing cover art, using content-aware scaling, and making other adjustments. The primary focus was converting three-part Nintendo 3DS or GBA covers, which took 20-45 minutes each. This process was incredibly labor-intensive; creating 37 covers for the mainline Pokemon games took about two weeks of work.</p>
+                        <br>
+                        <p>Early attempts at automation using simple Python scripts to stretch images yielded crude results unworthy of the price tag they aimed to compete with. It became clear that a more sophisticated approach was needed—one that could understand what a "correct" format is and preserve image information, rather than just performing basic resizing operations.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">The Solution: <span class="text-orange-500">A GAN-Powered Pipeline</span></h3>
+                        <p>The project was revisited with a new objective: build, train, and deploy a deep learning ETL pipeline to transform a three-panel 3DS layout into a j-card design. The model of choice was Pix2Pix, a conditional GAN framework known for excelling at image-to-image translation tasks. The process was broken down into four key phases.</p>
+                    </div>
+                    
+                    <div class="timeline-container overflow-x-auto pb-8 pt-2 -mx-2 px-2">
+                        <div class="flex space-x-6 w-max px-2">
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 1: Data Acquisition</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">The 3DS format was chosen for the ease of sourcing covers. A Python script was used to generate download links by combining game serial IDs from 3dsdb and GameTDB, resulting in a foundational dataset of 157 high-quality cover scans.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 2: Image Segmentation</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">A semi-automated GUI tool utilizing OpenCV was built to segment the covers into 6 sections using edge detection and template matching. These segmented pieces were then paired with 50 hand-crafted "target" images, which took over 10 hours to create and served as the desired output for the model.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 3: Model Training</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">Using the 50 target images and the source data, 8 specialized sub-models were trained in a human-in-the-loop (HITL) feedback cycle. Training was conducted on Google Colab Pro using A100 GPUs. A detailed training script ensured reproducibility, managing everything from hyperparameter tuning to logging and model exporting.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="w-80 flex-shrink-0">
+                                <div class="bg-gray-800 rounded-lg px-6 py-10 h-full flex flex-col shadow-lg border border-gray-700">
+                                    <h4 class="text-xl font-semibold mb-3 text-orange-400">Phase 4: Iteration & Refinement</h4>
+                                    <p class="text-gray-400 text-sm flex-grow">The final phase involved a continuous loop of hyperparameter tuning and refinement on Google Colab. Issues encountered during training underscored a core principle: robust data preparation is often more critical than complex model architecture adjustments.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">Technical Details: <span class="text-orange-500">Training Specification</span></h3>
+                        <p>The model training was a highly structured process. Each of the eight sub-models followed a standard Pix2Pix architecture with a U-Net based Generator and a PatchGAN Discriminator. Key training parameters and techniques included:</p>
+                        <ul class="list-disc list-inside space-y-2 mt-4 pl-4 text-gray-400">
+                            <li><strong>Hardware:</strong> Google Colab Pro with NVIDIA A100 GPUs (40GB VRAM).</li>
+                            <li><strong>Performance:</strong> Mixed-precision was enabled for significant speed gains.</li>
+                            <li><strong>Image Size:</strong> Models were trained on 256x256 and later 512x512 images for higher output fidelity.</li>
+                            <li><strong>Augmentation:</strong> Applied random flips, brightness, and contrast shifts to improve generalization.</li>
+                            <li><strong>Regularization:</strong> Used label smoothing (real=0.9) to stabilize discriminator performance.</li>
+                            <li><strong>Hyperparameters:</strong> Epochs ranged from 150–300, batch size was kept at 8, and separate learning rates were set for the Generator (0.0002) and Discriminator (0.0001) with exponential decay.</li>
+                            <li><strong>Monitoring:</strong> Sample images were generated every 20 epochs for visual quality assessment, and all losses were logged.</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mt-8 mb-4 border-b-2 border-gray-700 pb-2">Current State & <span class="text-orange-500">Next Steps</span></h3>
+                        <p>In its current state, the top performing model produces results that are roughly 80% of a desired output—a passable attempt with some obvious flaws. With further work, such as increasing the training set size to 100 or more target images, the model could potentially achieve a sellable result.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-        import { 
-            getFirestore, collection, doc, setDoc, getDoc, addDoc, 
-            increment, serverTimestamp, updateDoc, arrayUnion 
-        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCie6KnCFUvvp62kC409HgBqpOPNIQdr_c",
-            authDomain: "landing-page-fe3ce.firebaseapp.com",
-            projectId: "landing-page-fe3ce",
-            storageBucket: "landing-page-fe3ce.appspot.com",
-            messagingSenderId: "454823001475",
-            appId: "1:454823001475:web:cc4550276a356e388e4ab6",
-            measurementId: "G-3GX6VYVKWG"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        async function handlePageLoad() {
-            // --- Session & Element Setup ---
-            const sessionId = self.crypto.randomUUID();
-            const urlParams = new URLSearchParams(window.location.search);
-            const isNfcVisitor = urlParams.get('source') === 'nfc';
-            const source = isNfcVisitor ? 'nfc' : 'direct';
-
-            const popup = document.getElementById('dataPopup');
-            const popupHeader = document.getElementById('popupHeader');
-            const popupContent = document.getElementById('popupContent');
-            const hideBtn = document.getElementById('hidePopup');
-            const submitBtn = document.getElementById('submitCompany');
-            const emailBtn = document.getElementById('email-btn');
-
-            // --- UI Setup (RUNS IMMEDIATELY) ---
-            // Handle Survey Popup Appearance and Disappearance
-            setTimeout(() => popup.classList.remove('is-hidden'), 1500);
-            const hidePopup = () => popup.classList.add('is-hidden');
-            hideBtn.addEventListener('click', hidePopup);
-
-            // Handle Survey Submission
-            submitBtn.addEventListener('click', async () => {
-                const companyInput = document.getElementById('companyInput');
-                const companyName = companyInput.value.trim();
-                const sessionRef = doc(db, 'sessions', sessionId);
-
-                await updateDoc(sessionRef, {
-                    surveySubmitted: true,
-                    companyName: companyName || "Anonymous"
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileMenuButton = document.querySelector('.md\\:hidden');
+                const timelines = document.querySelectorAll('.timeline-container');
+                timelines.forEach(timeline => {
+                    if (timeline) {
+                        timeline.addEventListener('wheel', (e) => {
+                            if (e.deltaY === 0) return;
+                            e.preventDefault();
+                            timeline.scrollLeft += e.deltaY;
+                        }, { passive: false });
+                    }
                 });
 
-                if (companyName) {
-                    await addDoc(collection(db, 'surveys'), {
-                        companyName: companyName,
-                        submittedAt: serverTimestamp(),
-                        sessionId: sessionId
+                const overlay = document.getElementById('caseStudyOverlay');
+                const openBtn = document.getElementById('readCaseStudy');
+                const closeBtn = document.getElementById('closeOverlay');
+
+                if (openBtn && overlay && closeBtn) {
+                    openBtn.addEventListener('click', () => {
+                        overlay.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    });
+
+                    closeBtn.addEventListener('click', () => {
+                        overlay.classList.add('hidden');
+                        document.body.style.overflow = '';
                     });
                 }
-                
-                popupHeader.style.display = 'none';
-                document.getElementById('formSection').classList.add('hidden');
-                document.getElementById('thankYouSection').classList.remove('hidden');
-                popupContent.classList.remove('p-4');
-                popupContent.classList.add('p-3');
-                
-                setTimeout(hidePopup, 1500);
             });
-
-            // Handle General Button Click Tracking
-            const trackableButtons = document.querySelectorAll('.track-click');
-            trackableButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const buttonName = button.dataset.trackName;
-                    const sessionRef = doc(db, 'sessions', sessionId);
-                    updateDoc(sessionRef, {
-                        clickedButtons: arrayUnion({
-                            name: buttonName,
-                            timestamp: new Date()
-                        })
-                    });
-                });
-            });
-
-            // Handle Email Button Copy
-            const originalEmailBtnText = emailBtn.innerText;
-            emailBtn.addEventListener('click', () => {
-                const email = emailBtn.dataset.email;
-                navigator.clipboard.writeText(email).then(() => {
-                    emailBtn.innerText = 'Copied!';
-                    setTimeout(() => { emailBtn.innerText = originalEmailBtnText; }, 2000);
-                }).catch(err => { console.error('Failed to copy text: ', err); });
-            });
-
-            // --- Analytics (RUNS IN BACKGROUND) ---
-            // Create Session Document
-            const sessionRef = doc(db, 'sessions', sessionId);
-            await setDoc(sessionRef, {
-                sessionId: sessionId,
-                source: source,
-                sessionStart: serverTimestamp(),
-                surveySubmitted: false,
-                clickedButtons: []
-            });
-
-            // Track Visitor Count
-            const analyticsRef = doc(db, 'analytics', 'visitorCounts');
-            const fieldToIncrement = isNfcVisitor ? 'nfcVisitors' : 'nonNfcVisitors';
-            await setDoc(analyticsRef, { [fieldToIncrement]: increment(1) }, { merge: true });
-
-            // Fetch Data and Update Welcome Text
-            const docSnap = await getDoc(analyticsRef);
-            if (docSnap.exists()) {
-                const counts = docSnap.data();
-                const nfcCount = counts.nfcVisitors || 0;
-                const nonNfcCount = counts.nonNfcVisitors || 0;
-                const totalVisitors = nfcCount + nonNfcCount;
-                const welcomeText = document.getElementById('welcome-text');
-                
-                if (totalVisitors > 0) {
-                    const percentage = ((nfcCount / totalVisitors) * 100).toFixed(2);
-                    welcomeText.innerHTML = `Thank you for visiting my landing page. <br> Did you know <b>${percentage}%</b> of visitors arrive via the NFC tag in my card?`;
-                }
-                if (isNfcVisitor) {
-                    welcomeText.classList.add('nfc-glow');
-                    setTimeout(() => welcomeText.classList.remove('nfc-glow'), 3000);
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', handlePageLoad);
-    </script>
+        </script>
 </body>
 </html>
